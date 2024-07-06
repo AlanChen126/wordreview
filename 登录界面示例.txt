@@ -1,0 +1,49 @@
+在模板文件夹添加模板login.pug:
+extends base.pug
+
+block title
+  title 登录界面
+
+block css
+  // Add any CSS or links to CSS files here
+  link(rel='stylesheet', href='/static/css/style.css')
+  style.
+    /* Additional embedded styles can be written here */
+
+block content
+  div.container
+    h2 Login
+    form#login-form(method='POST', action='')
+      // Django template tag for CSRF token
+      | {% csrf_token %}
+      div
+        label(for='username') Username:
+        input#username(type='text', name='username', required=true)
+      div
+        label(for='password') Password:
+        input#password(type='password', name='password', required=true)
+      div
+        button(type='submit') Log In
+      // Handle errors using Django template syntax within a Pug file
+      if error
+        p.error(style='color: red;') {{ error }}
+
+
+第二步添加视图函数：
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if username == 'admin' and password == 'securepassword':  # 示例硬编码的凭证
+            request.session['logged_in'] = True
+            return redirect('/homepage/')  # 登录成功，重定向到首页
+        else:
+            # 登录失败，返回错误信息
+            return render(request, 'login.pug', {'error': 'Invalid credentials'})
+
+    return render(request, 'login.pug')
+以及在原有的homepage函数上添加：
+ if not request.session.get('logged_in'):
+        return redirect('/')  # 未登录则重定向到登录页面
+第三步加载测试数据时候需要将数据转换成
+excel97-2003 xls格式，这是以为python包已更新识别方式和范围(网页加载单词书)
