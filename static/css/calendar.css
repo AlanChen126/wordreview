@@ -1,0 +1,58 @@
+table{
+    margin-top: 3rem;
+}
+
+th{
+    text-align: center;
+}
+
+td{
+    text-align:center;
+    width: 10%;
+    height: 60px;
+    padding:5px;
+}
+.td-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.td-date{
+    color: grey;
+    text-align:left;
+}
+
+.list{
+    text-align: center;
+    vertical-align: middle;
+    border-radius: .25rem;
+    margin: 1px 2px;
+    padding: 0 2px;
+    min-width: 50px;
+}
+
+.undo{
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+.done{
+    border: 1px solid grey;
+}
+.plus{
+    border: 1px dashed rgb(192, 192, 192);
+    color: grey;
+}
+
+#yesterday-mode{
+    width: 35%;
+    padding: 10px;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    border-radius: .25rem!important;
+    text-align: center;
+    margin: 10px;
+    cursor: pointer;
+    align-self: center;
+}

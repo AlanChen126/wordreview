@@ -1,11 +1,11 @@
 {% extends "base.pug" %}
-{% block title %}瀵煎叆鏁版嵁搴搟% endblock %}
+{% block title %}导入数据库{% endblock %}
 {% block css %}
 script
   | $(function () {
   |     $('#submit-btn').on('click', function (e) {
   |         //$('#submit-btn').addClass('d-none');
-  |         $('#wait').text('瀵煎叆鏁版嵁鎴愬姛鍚庡皢鑷姩璺宠浆')
+  |         $('#wait').text('导入数据成功后将自动跳转')
   |     })
   | })
 {% endblock %}
@@ -13,32 +13,31 @@ script
 {% block content %}
 
 div.d-flex.container.justify-content-center.flex-column
-  h3(style="margin-bottom:20px;text-align: center;") 瀵煎叆鏁版嵁搴�
+  h3(style="margin-bottom:20px;text-align: center;") 导入数据库
   {% if message %}
   div.alert.alert-warning 
-   | 鎮ㄧ殑杈撳叆鏈夐棶棰橉煒�(鎶ラ敊璇﹁鍛戒护琛�)
+   | 您的输入有问题
    | {{ message }}
   {% endif %}
   form(method="post" action='/import/')#pwdForm.d-flex.flex-column
     {% csrf_token %}
     div.form-group
-      label 鍗曡瘝鏈殑鍚嶅瓧锛堣鐢ㄨ嫳鏂囷紝涓嶅甫绌烘牸锛�
+      label 单词本的名字（请用英文，不带空格）
       input(type="text" name="BOOK" placeholder="eg: CET6_green" required='true').form-control
     div.form-group
-      label 鍗曡瘝鏈殑涓枃鍚�
-      input(type="text" name="BOOK_zh" placeholder="eg: 鏂颁笢鏂瑰叚绾х豢鐨功" required='true').form-control
+      label 单词本的中文名
+      input(type="text" name="BOOK_zh" placeholder="eg: 新东方六级绿皮书" required='true').form-control
     div.form-group
-      label 鍗曡瘝鏈殑缂╁啓锛堢敤浜庢棩鍘嗘樉绀猴紝寤鸿涓€涓嫳鏂囧ぇ鍐欏瓧绗︼級
+      label 单词本的缩写（用于日历显示，建议一个英文大写字符）
       input(type="text" name="BOOK_abbr" placeholder="eg: G" required='true').form-control
     div.form-group
-      label 鍗曡瘝鏈� list銆乽nit銆乮ndex 鐨勫簭鍙蜂粠 0 寮€濮嬭繕鏄粠 1 寮€濮�
-      input(type="text" name="begin_index" placeholder="杈撳叆 0 鎴� 1" required='true').form-control
+      label 单词本 list、unit、index 的序号从 0 开始还是从 1 开始
+      input(type="text" name="begin_index" placeholder="输入 0 或 1" required='true').form-control
     div.form-group
-      label 鍗曡瘝 excel 鏂囦欢璺緞锛堢粷瀵硅矾寰勶級
+      label 单词 excel 文件路径（绝对路径）
       input(type="text" name="excel_path" placeholder="/file/path/to/excel.xls" required='true').form-control
     div.justify-content-center.d-flex
       label
         p#wait
-      button(type='submit').btn.btn-primary#submit-btn 寮€濮嬪鍏ユ暟鎹�
-    a(href="https://github.com/Benature/WordReview/blob/ben/doc/database_init.md#%E7%BD%91%E9%A1%B5%E5%AF%BC%E5%85%A5") 瀵瑰鍏ョ殑璁剧疆鍐呭鏈夌枒鎯戯紵鐐硅繖閲�
+      button(type='submit').btn.btn-primary#submit-btn 开始导入数据
 {% endblock %}
