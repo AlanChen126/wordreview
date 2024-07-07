@@ -1,0 +1,26 @@
+//- 登录界面首页
+doctype html
+html
+  head
+    title.
+      #{title}
+    //- 使用国内镜像网站访问bootstrap
+    link(rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/4.3.1/css/bootstrap.min.css")
+
+  body(style="overflow-x: hidden; margin-top: 0;")
+    .p-4.text-center.bg-light.text-dark
+      .row
+        .col-md-1
+        .col-md-10
+          h1.mb-2 登录界面
+      br
+      if !authorised
+        .row 
+          .col-md-4
+          .col-md-2
+            a.btn(href="/profile" role="button" style="font-size:25px") Login
+          .col-md-2
+            a.btn(href="/register" role="button" style="font-size:25px") Register
+          .col-md-4
+    br
+    block content

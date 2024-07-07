@@ -1,0 +1,26 @@
+//- 登录后的跳转界面，如果登录失败就重新登录
+extends ../blocks/master
+block content
+
+  if authorised
+      .text-center
+        h1 Welcome back, #{user.name}!
+        h2 账号登录成功，点击下方链接开始背单词吧！
+        a(href="http://localhost:8000/" style="font-size:30px;") 登录背单词网站
+        br
+        a(href="/profile/logout" style="color: #ffffff;margin-top:20px").btn.btn-primary 退出登录
+  else
+    .text-center
+      h1 Login
+      .row
+        .col-md-4
+        .col-md-4
+          form(action="/profile", method="post")
+            .mb-3
+              input(type="email", name="email", placeholder="email").form-control
+            .mb-3
+              input(type="password", name="secret", placeholder="password").form-control
+            .mb-3
+              input(type="submit", value="Authorize").form-control
+        .col-md-4
+      a(href="/register") Register?
