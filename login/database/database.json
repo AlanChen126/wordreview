@@ -1,0 +1,21 @@
+{
+    "users": [
+        {
+            "email": "admin@project.com",
+            "level": 100,
+            "name": "Administrator",
+            "key": "password"
+        }
+    ],
+    "projects": [
+        {
+            "id": 0,
+            "authors": [
+                "admin@project.com"
+            ],
+            "name": "Test Project",
+            "description": "This is a test project.",
+            "level": 100
+        }
+    ]
+}
