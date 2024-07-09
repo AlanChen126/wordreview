@@ -11,8 +11,8 @@ script(src="/static/js/review.js")
 {% block content %}
 nav.navbar.navbar-light.bg-light.sticky-top
   a.navbar-brand(href="/review/") 
-    img(src="/static/media/muyi.png"  height="30" class="d-inline-block align-top" alt="")
-    | &nbsp Word Review
+    //- img(src="/static/media/muyi.png"  height="30" class="d-inline-block align-top" alt="")
+    //- | &nbsp Word Review
   div.d-flex.flex-row
     div.d-flex.flex-row.justify-content-center(style="margin-right: 40px;")
       input#jump-index.form-control
@@ -55,14 +55,6 @@ div.container.flex-column
                 div.d-flex.flex-row.justify-content-between
                   div#tmpl-last-word
                   div(style="margin-right: 20px;")
-                    div.icon-flags.icon-star-div
-                      i.icon-star.icon-disabled
-                    div.icon-flags.icon-circle-div
-                      i.icon-circle.icon-disabled
-                    div.icon-flags.icon-cloud-div
-                      i.icon-cloud.icon-disabled
-                    div.icon-flags.icon-ok-div
-                      i.icon-ok.icon-disabled
                 div#meaning-box.rounded.shadow
                   div.align-self-center#tmpl-content.hide
               div.align-self-center.btn-jump#jump-forward(style="margin-right: 5px;") &raquo;
