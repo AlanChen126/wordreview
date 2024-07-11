@@ -23,6 +23,19 @@ function getDataRow(data, i, tag = 'td') {
         let date = addDays(calendar_begin, j)
         let bigDiv = document.createElement('div');
         bigDiv.innerHTML = '<div class="td-date">' + (date.getMonth() + 1) + '月' + date.getDate() + '日' + '</div>';
+
+        //渲染单词元素在单词表格中
+        let text = '<div class="d-flex flex-wrap">';
+        for (let k = 0; k < data[j].length; k++) {
+            let d = data[j][k];
+            let l = (d.LIST + 1).toString();
+            // l = l.length == 1 ? '0' + l : l;
+            let cls = d.state;
+            let href = 'book=' + d.BOOK + '&list=' + d.LIST;
+            text += '<div class="list ' + cls + '" href="' + href + '">' + d.abbr + l + '<sup>' + d.count + '</sup></div>';
+        }
+        bigDiv.innerHTML += text + '</div';
+
         bigDiv.setAttribute('class', 'td-div');
         cell.appendChild(bigDiv);
         cell.setAttribute('valign', 'top')

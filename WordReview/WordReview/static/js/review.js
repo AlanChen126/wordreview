@@ -316,6 +316,7 @@ $(function () {
       "]"
     );
     $("#tmpl-last-word")
+      // .text(wordCount + "| " + lastWord)
       .text(wordCount + "| " + lastWord)
       .removeClass(remember ? "last-forget" : "last-remember")
       .addClass(remember ? "last-remember" : "last-forget");
@@ -491,6 +492,59 @@ $(function () {
     }
     let myChart = echarts.init(document.getElementById("echarts-left"));
 
+    // 记忆曲线绘图（左上角）
+    option = {
+      title: {
+        show: true,
+        text: word,
+        subtext: "复习历史",
+        textStyle: {
+          color: "#757575",
+          fontWeight: "normal",
+        },
+        // textStyle: {
+        //     color: "#333",
+        // },
+      },
+      legend: {
+        data: ["记忆曲线"],
+      },
+      toolbox: {
+        show: false,
+        feature: {
+          mark: { show: true },
+          dataView: { show: true, readOnly: true },
+          magicType: { show: true, type: ["line", "bar"] },
+          restore: { show: true },
+          saveAsImage: { show: true },
+        },
+      },
+      xAxis: {
+        show: false,
+        type: "category",
+        boundaryGap: false,
+        data: X,
+      },
+      yAxis: {
+        // show: false,
+        type: "value",
+        // axisLine: {
+        //     lineStyle: {
+        //         color: '#1a85ff'
+        //     }
+        // }
+      },
+      series: [
+        {
+          data: Y,
+          type: "line",
+          // areaStyle: {}
+          smooth: 0.2,
+          color: "#1a85ff",
+        },
+      ],
+    };
+    myChart.setOption(option);
     $("#echarts-left").addClass("d-none");
 
     // 例句
@@ -576,7 +630,28 @@ $(function () {
         url: "https://mnemonicdictionary.com/",
       },
     }).done(function (response) {
-
+      // 最右边的例句
+      if (response.status === 200) {
+        document.getElementById("word-mnemonic").innerHTML = "";
+        let mnemonic = response.data;
+        // console.log(mnemonic);
+        if (mnemonic.length != 0) {
+          // twoColumn = true;
+          mnemonic.forEach((m, i) => {
+            // console.log(m.up)
+            document.getElementById("word-mnemonic").innerHTML +=
+              '<div class="mnemonic-card"><div>' +
+              m.text +
+              '</div><div class="mnemonic-card-footer"><i class="icon-thumbs-up"></i>' +
+              m.up +
+              '<i class="icon-thumbs-down"></i>' +
+              m.down +
+              "</div></div>";
+          });
+        }
+      } else {
+        layer.msg(response.msg);
+      }
     });
   }
 
@@ -1085,6 +1160,148 @@ $(function () {
     });
   });
 
+  // 快捷键
+  $(document).keyup(function (e) {
+    // console.log(noteFocus)
+    // console.log(e.keyCode);
+    // console.log(e.ctrlKey, e.altKey);
+    if (!noteFocus) {
+      if (37 == e.keyCode && e.shiftKey) {
+        // shift + left arrow
+        if (mode.preview) {
+          layer.msg("当前处于预习模式，不是复习");
+        } else if ($("#tmpl-content").hasClass("d-none")) {
+          console.log("急啥呢");
+        } else {
+          $("#btn-forget").click();
+        }
+      } else if (39 == e.keyCode && e.shiftKey) {
+        // shift + right arrow
+        if (mode.preview) {
+          layer.msg("当前处于预习模式，不是复习");
+        } else if ($("#tmpl-content").hasClass("d-none")) {
+          console.log("急啥呢");
+        } else {
+          $("#btn-remember").click();
+        }
+      } else if (188 == e.keyCode && (!e.shiftKey || !mode.preview)) {
+        // <
+        $("#jump-back").click();
+        if (mode.preview) {
+          $("#meaning-box").click();
+        }
+      } else if (190 == e.keyCode && (!e.shiftKey || !mode.preview)) {
+        // >
+        $("#jump-forward").click();
+        if (mode.preview) {
+          $("#meaning-box").click();
+        }
+      } else if ((78 == e.keyCode || 13 == e.keyCode) && !e.shiftKey) {
+        // N or enter
+        $(".hide").removeClass("d-n-note");
+        // $('#tmpl-note').removeClass('d-n-note');
+        let noteNode = document.getElementById("tmpl-note");
+        // let range = document.createRange();
+        // let len = noteNode.childNodes.length;
+        // range.setStart(noteNode, len);
+        // range.setEnd(noteNode, len);
+        // getSelection().addRange(range);
+        noteNode.focus();
+        // noteNode.selection.setRangeAtEndOf(len);
+        // range.moveToElementText(noteNode);
+        // range.select();
+        // $('#tmpl-note').select();
+      } else if (32 == e.keyCode || 191 == e.keyCode /*|| 13 == e.keyCode*/) {
+        // blank or /
+        $("#meaning-box").click();
+      }
+
+      if (mode.preview) {
+        if (188 == e.keyCode && e.shiftKey) {
+          // shift + <
+          wordIndex = Math.floor((wordIndex - 1) / 10) * 10;
+          renderWord(wordArray[wordIndex]);
+          $("#meaning-box").click();
+        } else if (190 == e.keyCode && e.shiftKey) {
+          // shift + >
+          wordIndex = Math.ceil((wordIndex + 1) / 10) * 10;
+          renderWord(wordArray[wordIndex]);
+          $("#meaning-box").click();
+        }
+      }
+    }
+  });
+});
+
+hotkeys("C, N, S, P, I, T, V, M, R", function (event, handler) {
+  if (!noteFocus) {
+    switch (handler.key) {
+      case "C":
+        if (/<font.*?>([\s\S]*?)<[hb]r>/.test($("#word-sand")[0].innerHTML)) {
+          copy2Clipboard(RegExp.$1, "clipboard");
+          $(".hide").removeClass("d-n-note");
+          document.getElementById("tmpl-note").focus();
+        }
+        break;
+      case "P":
+        if (!mode.preview) {
+          mode.preview = true;
+          layer.msg("学习/预习模式");
+        } else {
+          mode.preview = false;
+          layer.msg("恢复到复习模式");
+        }
+        break;
+      case "I":
+        if (!mode.input) {
+          layer.msg("听写模式：开");
+          // console.log("input mode: on");
+          mode.input = true;
+          $("#tmpl-word")[0].contentEditable = true;
+          $("#tmpl-content").removeClass("hide").removeClass("d-none");
+        } else {
+          layer.msg("听写模式：关");
+          // console.log("input mode: off");
+          mode.input = false;
+          $("#tmpl-word")[0].contentEditable = false;
+          $("#tmpl-content").addClass("hide");
+        }
+        break;
+      case "R":
+        $(".repeat").click();
+        break;
+
+      case "S":
+        window.open("https://www.thesaurus.com/browse/" + word + "?s=t");
+        break;
+      case "M":
+        window.open("https://mnemonicdictionary.com/?word=" + word);
+        break;
+      case "T":
+      case "V":
+        window.open("http://www.wordsand.cn/lookup.asp?word=" + word);
+        break;
+    }
+  }
+});
+
+hotkeys("shift+E, shift+H, shift+G, shift+F", function (event, handler) {
+  if (!noteFocus) {
+    switch (handler.key) {
+      case "shift+E":
+        $(".icon-ok").click();
+        break;
+      case "shift+H":
+        $(".icon-star").click();
+        break;
+      case "shift+G":
+        $(".icon-circle").click();
+        break;
+      case "shift+F":
+        $(".icon-cloud").click();
+        break;
+    }
+  }
 });
 
 window.onbeforeunload = function (event) {

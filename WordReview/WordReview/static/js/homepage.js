@@ -41,3 +41,11 @@ $(function () {
   });
 });
 
+$(document).keyup(function (e) {
+  // console.log(e.keyCode);
+  if (89 == e.keyCode) {
+    $("#yesterday-mode").click();
+  } else if (67 == e.keyCode) {
+    document.location = "/calendar/";
+  }
+});

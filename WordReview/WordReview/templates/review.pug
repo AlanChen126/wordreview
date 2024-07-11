@@ -13,6 +13,7 @@ nav.navbar.navbar-light.bg-light.sticky-top
   a.navbar-brand(href="/review/") 
     //- img(src="/static/media/muyi.png"  height="30" class="d-inline-block align-top" alt="")
     //- | &nbsp Word Review
+    a.btn.btn-primary(href="#", onclick="window.history.back()", style="font-size: 16px; position: absolute; top: 12px; left: 150px;") 返回上一页
   div.d-flex.flex-row
     div.d-flex.flex-row.justify-content-center(style="margin-right: 40px;")
       input#jump-index.form-control
@@ -55,6 +56,19 @@ div.container.flex-column
                 div.d-flex.flex-row.justify-content-between
                   div#tmpl-last-word
                   div(style="margin-right: 20px;")
+                    //- 标识是否认识的图标
+                    div.icon-flags.icon-star-div
+                      i.icon-star.icon-disabled(style='width: 22px; height:15px;margin-left:2px')
+                      span(style='width: 10px; font-size:12px') 重难点 |
+                    div.icon-flags.icon-circle-div
+                      i.icon-circle.icon-disabled(style='width: 24px; height:15px;margin-left:2px')
+                      span(style='width: 10px; font-size:12px') 掌握 |
+                    div.icon-flags.icon-cloud-div
+                      i.icon-cloud.icon-disabled(style='width: 24px; height:15px;margin-left:2px')
+                      span(style='width: 10px;font-size:12px') 熟悉 |
+                    div.icon-flags.icon-ok-div
+                      i.icon-ok.icon-disabled(style='width: 24px; height:15px;margin-left:2px')
+                      span(style='width: 10px;font-size:12px') 简单
                 div#meaning-box.rounded.shadow
                   div.align-self-center#tmpl-content.hide
               div.align-self-center.btn-jump#jump-forward(style="margin-right: 5px;") &raquo;

@@ -13,7 +13,8 @@ script
 {% block content %}
 
 div.d-flex.container.justify-content-center.flex-column
-  h3(style="margin-bottom:20px;text-align: center;") 导入数据库
+  h3(style="padding:20px;margin-bottom:20px;text-align: center;") 导入数据库
+  a.btn.btn-primary(href="#", onclick="window.history.back()", style="font-size: 16px; position: absolute; top: 20px; left: 150px;") 返回上一页
   {% if message %}
   div.alert.alert-warning 
    | 您的输入有问题

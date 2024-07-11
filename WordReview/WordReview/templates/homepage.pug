@@ -35,6 +35,8 @@ style
 {% block content %}
 div.container.flex-column
   p(style="margin-top:20px")
+    //- 添加返回上一页的按钮
+    a.btn.btn-primary(href="#", onclick="window.history.back()", style="font-size: 16px; position: absolute; top: 20px; left: 150px;") 返回上一页
     a(style="text-align:end;font-size:25px;" href="/calendar/") 艾宾浩斯复习日历
   
   #tmpl-qotd
@@ -67,7 +69,8 @@ div.container.flex-column
           | {{l.recent_rate}}%
     {% endfor %}
   {% endfor %}
-  a(style="text-align:end;margin-top:30px" href="/import/") 我要导入新的单词书
+  div   
+    a(style="position:absolute;right:15%;text-align:right;margin-top:30px;width:150px" href="/import/") 我要导入新的单词书
   hr
   div.text-center(style="margin-bottom: 130px;")
 {% endblock %}

@@ -1,4 +1,3 @@
-//获取URL查询字符串中的参数值、将文本内容复制到剪贴板以及朗读文本
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
