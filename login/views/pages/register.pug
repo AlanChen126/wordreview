@@ -2,7 +2,7 @@
 extends ../blocks/master
 block content
   .text-center
-    h1 Register a user
+    h1 注册账户
     if response
       p= response
     .row
@@ -10,11 +10,11 @@ block content
       .col-md-4
         form(action="/register", method="POST")
           .mb-3
-            input(type="email", name="email", placeholder="email" required).form-control
+            input(type="email", name="email", placeholder="请输入邮箱" required).form-control
           .mb-3
-            input(type="name", name="name", placeholder="name" required).form-control
+            input(type="name", name="name", placeholder="请输入用户名(2-8位,包含大/小写英文字母、数字和-)" required).form-control
           .mb-3
-            input(type="password", name="secret", placeholder="password" required).form-control
+            input(type="password", name="secret", placeholder="请输入密码(5-8位，包含大/小写英文字母、数字)" required).form-control
           .mb-3
-            input(type="submit", value="Register")
+            input(type="submit", value="点击注册")
       .col-md-4

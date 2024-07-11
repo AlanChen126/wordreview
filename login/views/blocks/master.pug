@@ -10,6 +10,8 @@ html
     .p-4.text-center.bg-light.text-dark
       .row
         .col-md-1
+          //- 添加返回上一页的按钮
+          a.btn.btn-secondary(href="#", onclick="window.history.back()", style="font-size: 16px; position: absolute; top: 5px; left: 20px;") 返回上一页
         .col-md-10
           h1.mb-2 登录界面
       br
@@ -17,9 +19,9 @@ html
         .row 
           .col-md-4
           .col-md-2
-            a.btn(href="/profile" role="button" style="font-size:25px") Login
+            a.btn(href="/profile" role="button" style="font-size:25px") 登录
           .col-md-2
-            a.btn(href="/register" role="button" style="font-size:25px") Register
+            a.btn(href="/register" role="button" style="font-size:25px") 注册
           .col-md-4
     br
     block content

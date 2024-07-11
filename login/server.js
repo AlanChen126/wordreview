@@ -10,10 +10,6 @@ app.use(session({
   secret: 'sebmandal.com=your_mom',
   resave: false,
   saveUninitialized: true,
-  // cookie: {
-  //   secure: true
-  // }
-  // ^^^if https, not http
 }));
 
 const path = require('path');
