@@ -67,8 +67,8 @@ router.post('/register', function (req, res) {
   const newUser = {
     email: email,
     level: 0,
-    username: username, // 使用 username 而不是 name
-    password: password
+    name: username,
+    key: password
   };
   db.users.push(newUser);
   try {
